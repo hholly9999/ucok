@@ -21,79 +21,88 @@ local Tab = Window:MakeTab({
 	PremiumOnly = false
 })
 Tab:AddParagraph("Thank you for using my script!","Discord: Shag420")
-Tab:AddParagraph("Warning:", "You may need to click the buttons multiple times for it to work")
-
 -- Fungsi untuk memberikan hadiah kepada pemain lokal
 Tab:AddButton({
-	Name = "Give Prizes To Self (Start Machine First)",
-	Callback = function()
-		for _, v in next, game.Workspace.Machines:GetDescendants() do
-			if v.Name == "Player" then
-				-- Pastikan ini mesin milik pemain lokal
-				if v.Text == game.Players.LocalPlayer.Name then
-					local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
-					if escaner then
-						for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-							if gacha:IsA("Model") then
-								local body = gacha:FindFirstChild("Body")
-								if body and body:IsA("Part") then
-									-- Pindahkan boneka (Body) ke atas Escaner
-									local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
-									body.Position = targetPosition
+    Name = "Give Prizes To Self (Start Machine First)",
+    Callback = function()
+        for _, v in next, game.Workspace.Machines:GetDescendants() do
+            if v.Name == "Player" then
+                if v.Text == game.Players.LocalPlayer.Name then
+                    local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
+                    if escaner then
+                        for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
+                            if gacha:IsA("Model") then
+                                local body = gacha:FindFirstChild("Body")
+                                if body and body:IsA("Part") then
+                                    -- Cek dan lakukan interaksi dengan TouchInterest
+                                    local touchInterest = escaner:FindFirstChild("TouchInterest")
+                                    if touchInterest then
+                                        local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
+                                        body.Position = targetPosition
+                                        task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
+                                        body.Anchored = false
+                                        body.CanCollide = true
 
-									-- Lepaskan boneka untuk jatuh
-									task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
-									body.Anchored = false
-									body.CanCollide = true
+                                        -- Beri efek sentuhan ke TouchInterest
+                                        touchInterest:FireServer()
 
-									print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
-								else
-									warn("Gacha model tidak memiliki Body yang valid")
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
+                                        print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
+                                    else
+                                        warn("Escaner tidak memiliki TouchInterest.")
+                                    end
+                                else
+                                    warn("Gacha model tidak memiliki Body yang valid.")
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
 })
 
 -- Fungsi untuk memberikan hadiah kepada pemain lain
 Tab:AddButton({
-	Name = "Give Prizes To Others (Stand Next To Their Machine)",
-	Callback = function()
-		for _, v in next, game.Workspace.Machines:GetDescendants() do
-			if v.Name == "Player" then
-				local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
-				if escaner then
-					-- Pastikan pemain lokal berada dalam radius 10 unit dari Escaner
-					if game.Players.LocalPlayer:DistanceFromCharacter(escaner.Position) <= 10 then
-						for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-							if gacha:IsA("Model") then
-								local body = gacha:FindFirstChild("Body")
-								if body and body:IsA("Part") then
-									-- Pindahkan boneka (Body) ke atas Escaner
-									local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
-									body.Position = targetPosition
+    Name = "Give Prizes To Others (Stand Next To Their Machine)",
+    Callback = function()
+        for _, v in next, game.Workspace.Machines:GetDescendants() do
+            if v.Name == "Player" then
+                local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
+                if escaner then
+                    if game.Players.LocalPlayer:DistanceFromCharacter(escaner.Position) <= 10 then
+                        for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
+                            if gacha:IsA("Model") then
+                                local body = gacha:FindFirstChild("Body")
+                                if body and body:IsA("Part") then
+                                    -- Cek dan lakukan interaksi dengan TouchInterest
+                                    local touchInterest = escaner:FindFirstChild("TouchInterest")
+                                    if touchInterest then
+                                        local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
+                                        body.Position = targetPosition
+                                        task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
+                                        body.Anchored = false
+                                        body.CanCollide = true
 
-									-- Lepaskan boneka untuk jatuh
-									task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
-									body.Anchored = false
-									body.CanCollide = true
+                                        -- Beri efek sentuhan ke TouchInterest
+                                        touchInterest:FireServer()
 
-									print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lain!")
-								else
-									warn("Gacha model tidak memiliki Body yang valid")
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
+                                        print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lain!")
+                                    else
+                                        warn("Escaner tidak memiliki TouchInterest.")
+                                    end
+                                else
+                                    warn("Gacha model tidak memiliki Body yang valid.")
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
 })
+
 
 
 local Tab = Window:MakeTab({
