@@ -33,18 +33,23 @@ Tab:AddButton({
 				if v.Text == game.Players.LocalPlayer.Name then
 					local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
 					if escaner then
-						for _, prize in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-							if prize:IsA("Model") then
-								-- Pindahkan boneka ke atas Escaner
-								local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
-								prize:MoveTo(targetPosition)
-								
-								-- Lepaskan boneka untuk jatuh
-								task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
-								-- prize.Anchored = false
-								prize.CanCollide = true
-								
-								print("Boneka berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
+						for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
+							if gacha:IsA("Model") then
+								local body = gacha:FindFirstChild("Body")
+								if body and body:IsA("Part") then
+									-- Pindahkan boneka (Body) ke atas Escaner
+									local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
+									body.Position = targetPosition
+
+									-- Lepaskan boneka untuk jatuh
+									task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
+									body.Anchored = false
+									body.CanCollide = true
+
+									print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
+								else
+									warn("Gacha model tidak memiliki Body yang valid")
+								end
 							end
 						end
 					end
@@ -64,18 +69,23 @@ Tab:AddButton({
 				if escaner then
 					-- Pastikan pemain lokal berada dalam radius 10 unit dari Escaner
 					if game.Players.LocalPlayer:DistanceFromCharacter(escaner.Position) <= 10 then
-						for _, prize in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-							if prize:IsA("Model") then
-								-- Pindahkan boneka ke atas Escaner
-								local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
-								prize:MoveTo(targetPosition)
-								
-								-- Lepaskan boneka untuk jatuh
-								task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
-								prize.Anchored = false
-								prize.CanCollide = true
-								
-								print("Boneka berhasil dipindahkan dan dijatuhkan untuk pemain lain!")
+						for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
+							if gacha:IsA("Model") then
+								local body = gacha:FindFirstChild("Body")
+								if body and body:IsA("Part") then
+									-- Pindahkan boneka (Body) ke atas Escaner
+									local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
+									body.Position = targetPosition
+
+									-- Lepaskan boneka untuk jatuh
+									task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
+									body.Anchored = false
+									body.CanCollide = true
+
+									print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lain!")
+								else
+									warn("Gacha model tidak memiliki Body yang valid")
+								end
 							end
 						end
 					end
@@ -84,6 +94,7 @@ Tab:AddButton({
 		end
 	end
 })
+
 
 local Tab = Window:MakeTab({
 	Name = "Autofarms",
