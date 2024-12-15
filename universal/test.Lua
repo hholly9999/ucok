@@ -41,7 +41,7 @@ Tab:AddButton({
 								
 								-- Lepaskan boneka untuk jatuh
 								task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
-								prize.Anchored = false
+								-- prize.Anchored = false
 								prize.CanCollide = true
 								
 								print("Boneka berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
