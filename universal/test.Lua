@@ -24,37 +24,44 @@ Tab:AddParagraph("Thank you for using my script!","Discord: Shag420")
 -- Fungsi untuk memberikan hadiah kepada pemain lokal
 -- Tambahkan GarraAttachment pada boneka Gacha
 Tab:AddButton({
-	Name = "Add GarraAttachment to Gachas and Gancho",
-	Callback = function()
-		for i, v in ipairs(game.Workspace.Machines:GetDescendants()) do
-			if v.Name == "Player" then
-				if v.Parent.Parent.Parent:FindFirstChild("Escaner") then
-					if v.Text == player.Name then
-						-- Tambahkan GarraAttachment pada Gacha
-						for _, gachaModel in ipairs(v.Parent.Parent.Parent.Gachas:GetChildren()) do
-							local garraAttachment = gachaModel:FindFirstChild("GarraAttachment")
-							if not garraAttachment then
-								garraAttachment = Instance.new("Attachment")
-								garraAttachment.Name = "GarraAttachment"
-								garraAttachment.Parent = gachaModel
-							end
-						end
-
-						-- Tambahkan GarraAttachment pada Gancho
-						local gancho = v.Parent.Parent:FindFirstChild("Gancho")
-						if gancho then
-							local garraAttachment = gancho:FindFirstChild("GarraAttachment")
-							if not garraAttachment then
-								garraAttachment = Instance.new("Attachment")
-								garraAttachment.Name = "GarraAttachment"
-								garraAttachment.Parent = gancho
-							end
-						end
-					end
-				end
-			end
-		end
-	end
+    Name = "Give Prizes To Self (Start Machine First)",
+    Callback = function()
+        for i, v in next, game.Workspace.Machines:GetDescendants() do 
+            if v.Name == "Player" then
+                if v.Parent:FindFirstChild("Gancho") then
+                    if v.Text == game.Players.LocalPlayer.Name then 
+                        for b, c in next, v.Parent.Gachas:GetChildren() do 
+                            -- Pastikan garra1, garra2, garra3 memiliki Attachment0
+                            local gancho = v.Parent.Parent:FindFirstChild("Gancho")
+                            if gancho then
+                                local attachmentPointFound = false
+                                for _, garra in ipairs({"garra1", "garra2", "garra3"}) do
+                                    local garraMesh = gancho:FindFirstChild(garra)
+                                    if garraMesh then
+                                        local attachment = garraMesh:FindFirstChild("Attachment0")
+                                        if not attachment then
+                                            attachment = Instance.new("Attachment")
+                                            attachment.Name = "Attachment0"
+                                            attachment.Position = Vector3.new(0, 0, 0) -- Sesuaikan posisi attachment
+                                            attachment.Parent = garraMesh
+                                        end
+                                        attachmentPointFound = true
+                                    end
+                                end
+                                
+                                if attachmentPointFound then
+                                    -- Hubungkan boneka di gachas ke attachment pada garra
+                                    for _, gachon in ipairs(v.Parent.Gachas:GetChildren()) do
+                                        gachon.Attachment0 = gancho:FindFirstChild("Attachment0") -- Menyambungkan boneka ke garra
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end   
 })
 
 -- Fungsi untuk memberikan hadiah kepada pemain lain
