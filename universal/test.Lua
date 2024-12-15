@@ -22,42 +22,39 @@ local Tab = Window:MakeTab({
 })
 Tab:AddParagraph("Thank you for using my script!","Discord: Shag420")
 -- Fungsi untuk memberikan hadiah kepada pemain lokal
+-- Tambahkan GarraAttachment pada boneka Gacha
 Tab:AddButton({
-    Name = "Give Prizes To Self (Start Machine First)",
-    Callback = function()
-        for _, v in next, game.Workspace.Machines:GetDescendants() do
-            if v.Name == "Player" then
-                if v.Text == game.Players.LocalPlayer.Name then
-                    local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
-                    if escaner then
-                        local touchTransmitter = escaner:FindFirstChild("TouchTransmitter")
-                        if touchTransmitter then
-                            for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-                                if gacha:IsA("Model") then
-                                    local body = gacha:FindFirstChild("Body")
-                                    if body and body:IsA("Part") then
-                                        -- Cek dan lakukan interaksi dengan TouchTransmitter
-                                        touchTransmitter:FireServer()
+	Name = "Add GarraAttachment to Gachas and Gancho",
+	Callback = function()
+		for i, v in ipairs(game.Workspace.Machines:GetDescendants()) do
+			if v.Name == "Player" then
+				if v.Parent.Parent.Parent:FindFirstChild("Escaner") then
+					if v.Text == player.Name then
+						-- Tambahkan GarraAttachment pada Gacha
+						for _, gachaModel in ipairs(v.Parent.Parent.Parent.Gachas:GetChildren()) do
+							local garraAttachment = gachaModel:FindFirstChild("GarraAttachment")
+							if not garraAttachment then
+								garraAttachment = Instance.new("Attachment")
+								garraAttachment.Name = "GarraAttachment"
+								garraAttachment.Parent = gachaModel
+							end
+						end
 
-                                        local targetPosition = escaner.Position
-                                        body.Position = targetPosition
-                                        body.Anchored = false
-                                        body.CanCollide = true
-
-                                        print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
-                                    else
-                                        warn("Gacha model tidak memiliki Body yang valid.")
-                                    end
-                                end
-                            end
-                        else
-                            warn("Escaner tidak memiliki TouchTransmitter.")
-                        end
-                    end
-                end
-            end
-        end
-    end
+						-- Tambahkan GarraAttachment pada Gancho
+						local gancho = v.Parent.Parent:FindFirstChild("Gancho")
+						if gancho then
+							local garraAttachment = gancho:FindFirstChild("GarraAttachment")
+							if not garraAttachment then
+								garraAttachment = Instance.new("Attachment")
+								garraAttachment.Name = "GarraAttachment"
+								garraAttachment.Parent = gancho
+							end
+						end
+					end
+				end
+			end
+		end
+	end
 })
 
 -- Fungsi untuk memberikan hadiah kepada pemain lain
