@@ -30,30 +30,28 @@ Tab:AddButton({
                 if v.Text == game.Players.LocalPlayer.Name then
                     local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
                     if escaner then
-                        for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-                            if gacha:IsA("Model") then
-                                local body = gacha:FindFirstChild("Body")
-                                if body and body:IsA("Part") then
-                                    -- Cek dan lakukan interaksi dengan TouchInterest
-                                    local touchInterest = escaner:FindFirstChild("TouchInterest")
-                                    if touchInterest then
-                                        local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
+                        local touchTransmitter = escaner:FindFirstChild("TouchTransmitter")
+                        if touchTransmitter then
+                            for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
+                                if gacha:IsA("Model") then
+                                    local body = gacha:FindFirstChild("Body")
+                                    if body and body:IsA("Part") then
+                                        -- Cek dan lakukan interaksi dengan TouchTransmitter
+                                        touchTransmitter:FireServer()
+
+                                        local targetPosition = escaner.Position
                                         body.Position = targetPosition
-                                        task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
                                         body.Anchored = false
                                         body.CanCollide = true
 
-                                        -- Beri efek sentuhan ke TouchInterest
-                                        touchInterest:FireServer()
-
                                         print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lokal!")
                                     else
-                                        warn("Escaner tidak memiliki TouchInterest.")
+                                        warn("Gacha model tidak memiliki Body yang valid.")
                                     end
-                                else
-                                    warn("Gacha model tidak memiliki Body yang valid.")
                                 end
                             end
+                        else
+                            warn("Escaner tidak memiliki TouchTransmitter.")
                         end
                     end
                 end
@@ -71,30 +69,28 @@ Tab:AddButton({
                 local escaner = v.Parent.Parent.Parent:FindFirstChild("Escaner")
                 if escaner then
                     if game.Players.LocalPlayer:DistanceFromCharacter(escaner.Position) <= 10 then
-                        for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
-                            if gacha:IsA("Model") then
-                                local body = gacha:FindFirstChild("Body")
-                                if body and body:IsA("Part") then
-                                    -- Cek dan lakukan interaksi dengan TouchInterest
-                                    local touchInterest = escaner:FindFirstChild("TouchInterest")
-                                    if touchInterest then
-                                        local targetPosition = Vector3.new(escaner.Position.X, escaner.Position.Y + 5, escaner.Position.Z)
+                        local touchTransmitter = escaner:FindFirstChild("TouchTransmitter")
+                        if touchTransmitter then
+                            for _, gacha in next, v.Parent.Parent.Parent.Gachas:GetChildren() do
+                                if gacha:IsA("Model") then
+                                    local body = gacha:FindFirstChild("Body")
+                                    if body and body:IsA("Part") then
+                                        -- Cek dan lakukan interaksi dengan TouchTransmitter
+                                        touchTransmitter:FireServer()
+
+                                        local targetPosition = escaner.Position
                                         body.Position = targetPosition
-                                        task.wait(0.5) -- Tunggu sebentar agar boneka terlihat jatuh
                                         body.Anchored = false
                                         body.CanCollide = true
 
-                                        -- Beri efek sentuhan ke TouchInterest
-                                        touchInterest:FireServer()
-
                                         print("Boneka (Body) berhasil dipindahkan dan dijatuhkan untuk pemain lain!")
                                     else
-                                        warn("Escaner tidak memiliki TouchInterest.")
+                                        warn("Gacha model tidak memiliki Body yang valid.")
                                     end
-                                else
-                                    warn("Gacha model tidak memiliki Body yang valid.")
                                 end
                             end
+                        else
+                            warn("Escaner tidak memiliki TouchTransmitter.")
                         end
                     end
                 end
@@ -102,6 +98,7 @@ Tab:AddButton({
         end
     end
 })
+
 
 
 
