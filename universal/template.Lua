@@ -1,116 +1,81 @@
 local template = {}
 
 function template.CreateGUI()
-    -- Deklarasi Objek GUI
     local ScreenGui = Instance.new("ScreenGui")
     local MainFrame = Instance.new("Frame")
     local TitleLabel = Instance.new("TextLabel")
 
-    -- Tombol Kontrol GUI
     local MinimizeButton = Instance.new("TextButton")
     local CloseButton = Instance.new("TextButton")
     local MinimizeIcon = Instance.new("TextButton")
 
-    -- Pengaturan GUI
+    -- ScreenGui
     ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-    -- Konfigurasi Frame Utama
+    -- MainFrame
     MainFrame.Parent = ScreenGui
     MainFrame.BackgroundColor3 = Color3.new(0.12, 0.12, 0.12)
-    MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
-    MainFrame.Size = UDim2.new(0, 300, 0, 200)
+    MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    MainFrame.Size = UDim2.new(0, 300, 0, 300)
     MainFrame.BorderSizePixel = 0
-    MainFrame.BackgroundTransparency = 0.2
-    MainFrame.ClipsDescendants = true
-    MainFrame.Active = true
     MainFrame.Draggable = true
+    MainFrame.Active = true
+    MainFrame.ClipsDescendants = true
 
-    -- Konfigurasi Title (Judul Frame)
+    -- TitleLabel
     TitleLabel.Parent = MainFrame
-    TitleLabel.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     TitleLabel.Size = UDim2.new(1, 0, 0, 50)
-    TitleLabel.Font = Enum.Font.GothamBold
+    TitleLabel.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     TitleLabel.Text = "Panel Fitur"
+    TitleLabel.Font = Enum.Font.GothamBold
     TitleLabel.TextColor3 = Color3.new(1, 1, 1)
     TitleLabel.TextSize = 24
 
-    -- Konfigurasi Tombol Minimize
+    -- MinimizeButton
     MinimizeButton.Parent = MainFrame
-    MinimizeButton.BackgroundColor3 = Color3.new(0.18, 0.18, 0.18)
-    MinimizeButton.Position = UDim2.new(1, -60, 0, 10)
     MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-    MinimizeButton.Font = Enum.Font.SourceSans
+    MinimizeButton.Position = UDim2.new(0.9, -60, 0, 10)
     MinimizeButton.Text = "-"
-    MinimizeButton.TextColor3 = Color3.new(1, 1, 1)
-    MinimizeButton.TextSize = 20
+    MinimizeButton.BackgroundColor3 = Color3.new(0.18, 0.18, 0.18)
 
-    -- Konfigurasi Tombol Close
+    -- CloseButton
     CloseButton.Parent = MainFrame
-    CloseButton.BackgroundColor3 = Color3.new(0.18, 0.18, 0.18)
-    CloseButton.Position = UDim2.new(1, -30, 0, 10)
     CloseButton.Size = UDim2.new(0, 30, 0, 30)
-    CloseButton.Font = Enum.Font.SourceSans
+    CloseButton.Position = UDim2.new(0.9, -30, 0, 10)
     CloseButton.Text = "X"
-    CloseButton.TextColor3 = Color3.new(1, 1, 1)
-    CloseButton.TextSize = 20
+    CloseButton.BackgroundColor3 = Color3.new(0.18, 0.18, 0.18)
 
-    -- Konfigurasi Ikon Minimize
+    -- MinimizeIcon
     MinimizeIcon.Parent = ScreenGui
-    MinimizeIcon.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-    MinimizeIcon.Position = UDim2.new(0.5, -20, 0.5, -20)
     MinimizeIcon.Size = UDim2.new(0, 40, 0, 40)
-    MinimizeIcon.Font = Enum.Font.SourceSans
+    MinimizeIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+    MinimizeIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     MinimizeIcon.Text = "↓"
-    MinimizeIcon.TextColor3 = Color3.new(1, 1, 1)
-    MinimizeIcon.TextSize = 20
     MinimizeIcon.Visible = false
     MinimizeIcon.Draggable = true
     MinimizeIcon.Active = true
 
-    -- Efek Hover untuk Tombol
-    local function setupHover(button, hoverColor, defaultColor)
-        button.MouseEnter:Connect(function()
-            button.BackgroundColor3 = hoverColor
-        end)
-        button.MouseLeave:Connect(function()
-            button.BackgroundColor3 = defaultColor
-        end)
-    end
-
-    setupHover(MinimizeButton, Color3.new(0.3, 0.3, 0.3), Color3.new(0.18, 0.18, 0.18))
-    setupHover(CloseButton, Color3.new(0.3, 0.1, 0.1), Color3.new(0.18, 0.18, 0.18))
-
-    -- Fungsi Minimize
+    -- Animasi Minimize
     MinimizeButton.MouseButton1Click:Connect(function()
-        MainFrame:TweenSize(
-            UDim2.new(0, 0, 0, 0),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.3,
-            true,
-            function()
-                MainFrame.Visible = false
-                MinimizeIcon.Visible = true
-            end
-        )
+        MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), "Out", "Quad", 0.3, true, function()
+            MainFrame.Visible = false
+            MinimizeIcon.Visible = true
+        end)
     end)
 
-    -- Fungsi Restore
+    -- Animasi Restore
     MinimizeIcon.MouseButton1Click:Connect(function()
         MainFrame.Visible = true
-        MainFrame:TweenSize(
-            UDim2.new(0, 300, 0, 200),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.3,
-            true
-        )
+        MainFrame:TweenSize(UDim2.new(0, 300, 0, 300), "Out", "Quad", 0.3, true)
         MinimizeIcon.Visible = false
     end)
 
-    -- Fungsi Close
+    -- Close GUI
     CloseButton.MouseButton1Click:Connect(function()
-        ScreenGui:Destroy()
+        if ScreenGui then
+            ScreenGui:Destroy()
+        end
     end)
 end
 
