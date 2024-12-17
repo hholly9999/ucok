@@ -1,5 +1,3 @@
-local template = {}
-
 function template.CreateGUI()
     local ScreenGui = Instance.new("ScreenGui")
     local MainFrame = Instance.new("Frame")
@@ -79,4 +77,4 @@ function template.CreateGUI()
     end)
 end
 
-return template
+return ScreenGui, MainFrame
