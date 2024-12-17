@@ -1,4 +1,6 @@
-function template.CreateGUI()
+local templateBasic = {}
+
+function templateBasic.CreateGUI()
     local ScreenGui = Instance.new("ScreenGui")
     local MainFrame = Instance.new("Frame")
     local TitleLabel = Instance.new("TextLabel")
@@ -77,4 +79,8 @@ function template.CreateGUI()
     end)
 end
 
-return ScreenGui, MainFrame
+    -- Mengembalikan objek GUI utama
+    return ScreenGui, MainFrame
+end
+
+return templateBasic
