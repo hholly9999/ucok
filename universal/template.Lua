@@ -77,7 +77,6 @@ function templateBasic.CreateGUI()
             ScreenGui:Destroy()
         end
     end)
-end
 
     -- Mengembalikan objek GUI utama
     return ScreenGui, MainFrame
