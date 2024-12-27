@@ -17,7 +17,7 @@ function templateBasic.CreateGUI()
     MainFrame.BackgroundColor3 = Color3.new(0.12, 0.12, 0.12)
     MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
     MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-    MainFrame.Size = UDim2.new(0, 300, 0, 300)
+    MainFrame.Size = UDim2.new(0, 300, 0, 400)
     MainFrame.BorderSizePixel = 0
     MainFrame.Draggable = true
     MainFrame.Active = true
